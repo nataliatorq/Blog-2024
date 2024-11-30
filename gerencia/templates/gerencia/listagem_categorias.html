@@ -52,6 +52,33 @@
          </div>
      </div>
 
+      <!-- Paginação -->
+     <div class="pagination justify-content-center">
+         <nav>
+             <ul class="pagination">
+                 {% if categorias.has_previous %}
+                 <li class="page-item">
+                     <a class="page-link" href="?page={{ categorias.previous_page_number }}&termo={{ termo }}" aria-label="Previous">
+                         <span aria-hidden="true">&laquo;</span>
+                     </a>
+                 </li>
+                 {% endif %}
+                 {% for num in categorias.paginator.page_range %}
+                 <li class="page-item {% if categorias.number == num %}active{% endif %}">
+                     <a class="page-link" href="?page={{ num }}&termo={{ termo }}">{{ num }}</a>
+                 </li>
+                 {% endfor %}
+                 {% if categorias.has_next %}
+                 <li class="page-item">
+                     <a class="page-link" href="?page={{ categorias.next_page_number }}&termo={{ termo }}" aria-label="Next">
+                         <span aria-hidden="true">&raquo;</span>
+                     </a>
+                 </li>
+                 {% endif %}
+             </ul>
+         </nav>
+     </div>
+
      <div class="d-flex justify-content-end">
         <a href="{% url 'gerencia:categoria_cadastrar'%}" class="btn btn-primary btn-icon-split">
             <span class="icon text-white-50">
