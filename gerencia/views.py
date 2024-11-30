@@ -93,6 +93,7 @@ def index(request):
     }
     return render(request, 'gerencia/index.html', contexto)
 
+login_required(login_url='usuarios:login')
 def categoria_listar(request):
     categorias = Categoria.objects.all().annotate(nome_lower=Lower('nome')).order_by('nome_lower')
     paginator = Paginator(categorias, 10)  # Cria um paginator com 10 itens por página
@@ -106,6 +107,7 @@ def categoria_listar(request):
     }
     return render(request, 'gerencia/listagem_categorias.html', contexto)
 
+login_required(login_url='usuarios:login')
 def categoria_criar(request):
     if request.method == 'POST':
         form = CategoriaForm(request.POST)
@@ -120,6 +122,7 @@ def categoria_criar(request):
     }
     return render(request, 'gerencia/form_categoria.html', contexto)
 
+login_required(login_url='usuarios:login')
 def categoria_editar(request, id):
     categoria = Categoria.objects.get(id=id)
     if request.method == 'POST':
@@ -135,6 +138,7 @@ def categoria_editar(request, id):
     }
     return render(request, 'gerencia/form_categoria.html', contexto)
 
+login_required(login_url='usuarios:login')
 def categoria_remover(request, id):
     categoria = Categoria.objects.get(id=id)
     categoria.delete()
