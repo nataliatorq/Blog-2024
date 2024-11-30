@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models.functions import Lower
@@ -93,7 +94,8 @@ def index(request):
     }
     return render(request, 'gerencia/index.html', contexto)
 
-login_required(login_url='usuarios:login')
+
+@login_required(login_url='usuarios:login_redirect_view')
 def categoria_listar(request):
     categorias = Categoria.objects.all().annotate(nome_lower=Lower('nome')).order_by('nome_lower')
     paginator = Paginator(categorias, 10)  # Cria um paginator com 10 itens por página
@@ -107,7 +109,7 @@ def categoria_listar(request):
     }
     return render(request, 'gerencia/listagem_categorias.html', contexto)
 
-login_required(login_url='usuarios:login')
+@login_required(login_url='usuarios:login_redirect_view')
 def categoria_criar(request):
     if request.method == 'POST':
         form = CategoriaForm(request.POST)
@@ -122,7 +124,7 @@ def categoria_criar(request):
     }
     return render(request, 'gerencia/form_categoria.html', contexto)
 
-login_required(login_url='usuarios:login')
+@login_required(login_url='usuarios:login_redirect_view')
 def categoria_editar(request, id):
     categoria = Categoria.objects.get(id=id)
     if request.method == 'POST':
@@ -138,7 +140,7 @@ def categoria_editar(request, id):
     }
     return render(request, 'gerencia/form_categoria.html', contexto)
 
-login_required(login_url='usuarios:login')
+@login_required(login_url='usuarios:login_redirect_view')
 def categoria_remover(request, id):
     categoria = Categoria.objects.get(id=id)
     categoria.delete()

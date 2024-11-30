@@ -1,12 +1,12 @@
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import render, redirect,get_object_or_404
-from django.contrib import messages
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from .forms import UserBlogCreationForm, UserBlogEditForm
-from .models import UserBlog
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+from django.shortcuts import get_object_or_404, redirect, render
+
+from .forms import UserBlogCreationForm, UserBlogEditForm
+from .models import UserBlog
+
 
 def login_view(request):
     if request.method == 'POST':
@@ -28,6 +28,10 @@ def logout_view(request):
     logout(request) 
     return redirect('usuarios:login')  
 
+
+def login_redirect_view(request):
+    messages.info(request, "Você precisa estar logado para acessar esta página.")
+    return redirect('usuarios:login')
 
 
 def register(request):
