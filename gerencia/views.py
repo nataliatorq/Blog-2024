@@ -93,6 +93,9 @@ def index(request):
 
 def categoria_listar(request):
     categorias = Categoria.objects.all()
+    search_query = request.GET.get('termo')  # Obtém o parâmetro de busca
+    if search_query:
+        categorias = categorias.filter(nome__icontains=search_query)  # Filtra por título, ignorando maiúsculas/minúsculas
     contexto = {
         'categorias': categorias,
     }

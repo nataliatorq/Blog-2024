@@ -11,6 +11,12 @@
          <div class="card-header py-3">
              <h6 class="m-0 font-weight-bold text-primary">Filtrar Categorias</h6>
          </div>
+        <form action="{% url 'gerencia:categoria_listar' %}" method="GET">
+         <div class="container-search">
+            <input type="text" name="termo" class="form-control input-search" placeholder="Buscar categoria">
+            <button type="submit">Buscar</button>
+         </div>
+         </form>
      </div>
 
      <!-- Notícias Table -->
