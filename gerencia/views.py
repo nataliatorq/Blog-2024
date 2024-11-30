@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+from django.db.models.functions import Lower
 from django.shortcuts import redirect, render
 
 from .forms import CategoriaForm, NoticiaFilterForm, NoticiaForm
@@ -93,7 +94,7 @@ def index(request):
     return render(request, 'gerencia/index.html', contexto)
 
 def categoria_listar(request):
-    categorias = Categoria.objects.all()
+    categorias = Categoria.objects.all().annotate(nome_lower=Lower('nome')).order_by('nome_lower')
     paginator = Paginator(categorias, 10)  # Cria um paginator com 10 itens por página
     search_query = request.GET.get('termo')  # Obtém o parâmetro de busca
     if search_query:
